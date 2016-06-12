@@ -56,6 +56,19 @@ type EmbedsUnexportedType struct {
 //Bar is accessible, but Foo is not.
 func (EmbedsUnexportedType) Bar() {}
 
+//unexportedRecursive is not accessible.
+//
+//It should only be accessible because it's embedded in an exported struct and embeds a struct which has exported fields and methods.
+type unexportedRecursive struct {
+	unexportedButEmbedded
+}
+
+//EmbedsUnexportedTypeRecursive embeds an unexported type that embeds a type that contains exported methods and fields.
+type EmbedsUnexportedTypeRecursive struct {
+	//unexportedRecursively embeds a type that should be accessible because it embeds a type that should be accessible.
+	unexportedRecursive
+}
+
 //unexportedButEmbeddedInterface is not accessible.
 type unexportedButEmbeddedInterface interface {
 	Foo()
@@ -93,6 +106,7 @@ var (
 	_ EmbedsUnexportedInterface = unexportedButUsedInAConst(0)
 	_ EmbedsUnexportedInterface = unexportedButUsedInAField{}
 	_ EmbedsUnexportedInterface = unexportedButEmbedded{}
+	_ EmbedsUnexportedInterface = unexportedRecursive{}
 	_ EmbedsUnexportedInterface = unexportedButReturned{}
 	_ EmbedsUnexportedInterface = unexportedButUsedInParameter(0)
 )
