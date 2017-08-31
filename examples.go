@@ -70,15 +70,16 @@ type unexportedButEmbedded struct {
 	Exported int
 }
 
-//Foo is inaccessible.
+//Foo is now accessible on EmbedsExportedType as godoc handles this as a special case,
+//but it is still inaccessible on EmbedsUnexportedTypeRecursive.
 func (unexportedButEmbedded) Foo() {}
 
-//EmbedsUnexportedType embeds an unexported type that contains exported methods and fields which are not listed.
+//EmbedsUnexportedType embeds an unexported type that contains exported fields which are not listed.
 type EmbedsUnexportedType struct {
 	unexportedButEmbedded
 }
 
-//Bar is accessible, but Foo is not.
+//Bar and Foo is accessible.
 func (EmbedsUnexportedType) Bar() {}
 
 //unexportedRecursive is not accessible.
