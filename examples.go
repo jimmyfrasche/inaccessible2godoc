@@ -18,6 +18,22 @@ func (unexportedButUsedInAVar) Foo() {}
 //ExportedVarOfUnexportedButUsedInAVar is exported but the docs and methods of its type are inaccessible.
 var ExportedVarOfUnexportedButUsedInAVar = unexportedButUsedInAVar{}
 
+//unexportedButUsedInAVar is not accessible.
+type unexportedButUsedInAVar2 struct{}
+
+//unexportedButUsedInAVar3 is not accessible.
+type unexportedButUsedInAVar3 struct{}
+
+//unexportedAndNotUsedInAVar should not be accessible.
+type unexportedAndNotUsedInAVar struct{}
+
+//Ex2 and Ex3 are exported so their types should be as well,
+//but unexportedAndNotUsedInAVar should not be since it doesn't escape
+//to the public API.
+var Ex2, Ex3, _ = func() (ex2 unexportedButUsedInAVar2, ex3 unexportedButUsedInAVar3, ex4 unexportedAndNotUsedInAVar) {
+	return
+}()
+
 //unexportedButUsedInAConst is not accessible.
 type unexportedButUsedInAConst int
 
