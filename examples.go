@@ -43,6 +43,15 @@ func (unexportedButUsedInAConst) Foo() {}
 //ExportedConstOfUnexportedButUsedInAConst is exported but the docs and methods of its type are inaccessible.
 const ExportedConstOfUnexportedButUsedInAConst = unexportedButUsedInAConst(0)
 
+//unexportedConstCorner is not accessible to godoc.
+type unexportedConstCorner int
+
+const (
+	_ unexportedConstCorner = iota
+	//ExportedConstCornerCase was created with an unexported type and iota
+	ExportedConstCornerCase
+)
+
 //unexportedButUsedInAField is not accessible.
 type unexportedButUsedInAField struct{}
 
