@@ -110,3 +110,9 @@ var (
 	_ EmbedsUnexportedInterface = unexportedButReturned{}
 	_ EmbedsUnexportedInterface = unexportedButUsedInParameter(0)
 )
+
+//unexportedButAliased is not accessible.
+type unexportedButAliased struct{}
+
+//AliasesUnexportedType is accessible but unexportedButAliased is not.
+type AliasesUnexportedType = unexportedButAliased
