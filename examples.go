@@ -88,6 +88,8 @@ type unexportedButReturned struct{}
 func (unexportedButReturned) Foo() {}
 
 //ReturnUnexportedButReturned returns an unexported type which is inaccessible.
+//
+//Note: golint warns about this case.
 func ReturnUnexportedButReturned() *unexportedButReturned {
 	return nil
 }
